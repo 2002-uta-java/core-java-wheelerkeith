@@ -89,17 +89,23 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo && sideTwo == sideThree && sideOne == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo || sideTwo == sideThree || sideOne == sideThree) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne != sideTwo && sideTwo != sideThree && sideOne != sideThree) {
+				return true;
+			}
 			return false;
 		}
 
@@ -121,8 +127,30 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		string.toUpperCase();
+		char[] oldString = string.toCharArray();
+		int pointTotal = 0;
+		for (int i = 0; i < oldString.length; i++) {
+			char letter = oldString[i];
+			if (letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O'
+					|| letter == 'U' || letter == 'L' || letter == 'N' || letter == 'R'
+					|| letter == 'S' || letter == 'T') {
+				pointTotal += 1;
+			} else if (letter == 'D' || letter == 'G') {
+				pointTotal += 2;
+			} else if (letter =='B' || letter == 'C' || letter == 'M' || letter =='P') {
+				pointTotal += 3;
+			} else if (letter == 'F' || letter == 'H' || letter == 'V' || letter == 'W' || letter == 'Y') {
+				pointTotal += 4;
+			} else if (letter == 'K') {
+				pointTotal += 5;
+			} else if (letter == 'J' || letter == 'X') {
+				pointTotal += 8;
+			} else if (letter == 'Q' || letter == 'Z') {
+				pointTotal += 10;
+			}
+		}
+		return pointTotal;
 	}
 
 	/**
