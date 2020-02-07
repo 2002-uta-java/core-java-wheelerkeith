@@ -1,6 +1,8 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,7 +134,6 @@ public class EvaluationService {
 		for (int i = 0; i < oldString.length; i++) {
 			char letter = oldString[i];
 			char uLetter = Character.toUpperCase(letter);
-			System.out.println(uLetter);
 			if (uLetter == 'A' || uLetter == 'E' || uLetter == 'I' || uLetter == 'O'
 					|| uLetter == 'U' || uLetter == 'L' || uLetter == 'N' || uLetter == 'R'
 					|| uLetter == 'S' || uLetter == 'T') {
@@ -186,8 +187,20 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		
-		return null;
+		String[] pNumber = string.split(" |\\-|\\(|\\)|\\.");
+		String correctedNumber = "";
+		for (String num: pNumber) {
+			if (num == "1") {
+				continue;
+			} else {
+				correctedNumber += num;
+			}
+		}
+		if (correctedNumber.matches("^\\d{10}$")) {
+			return correctedNumber;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	/**
@@ -200,8 +213,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> countingWords = new HashMap<String, Integer>();
+		for (String word: string.split(" |\\,")) {
+			int count = 0;
+			if (countingWords.containsKey(word)) {
+				count = countingWords.get(word);
+				countingWords.replace(word, count++);
+				count = 0;
+			} else {
+				countingWords.put(word, 1);
+			}
+		}
+		return countingWords;
 	}
 
 	/**
