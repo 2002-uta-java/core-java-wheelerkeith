@@ -127,26 +127,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		string.toUpperCase();
 		char[] oldString = string.toCharArray();
 		int pointTotal = 0;
 		for (int i = 0; i < oldString.length; i++) {
 			char letter = oldString[i];
-			if (letter == 'A' || letter == 'E' || letter == 'I' || letter == 'O'
-					|| letter == 'U' || letter == 'L' || letter == 'N' || letter == 'R'
-					|| letter == 'S' || letter == 'T') {
+			char uLetter = Character.toUpperCase(letter);
+			System.out.println(uLetter);
+			if (uLetter == 'A' || uLetter == 'E' || uLetter == 'I' || uLetter == 'O'
+					|| uLetter == 'U' || uLetter == 'L' || uLetter == 'N' || uLetter == 'R'
+					|| uLetter == 'S' || uLetter == 'T') {
 				pointTotal += 1;
-			} else if (letter == 'D' || letter == 'G') {
+			} else if (uLetter == 'D' || uLetter == 'G') {
 				pointTotal += 2;
-			} else if (letter =='B' || letter == 'C' || letter == 'M' || letter =='P') {
+			} else if (uLetter =='B' || uLetter == 'C' || uLetter == 'M' || uLetter =='P') {
 				pointTotal += 3;
-			} else if (letter == 'F' || letter == 'H' || letter == 'V' || letter == 'W' || letter == 'Y') {
+			} else if (uLetter == 'F' || uLetter == 'H' || uLetter == 'V' || uLetter == 'W' || uLetter == 'Y') {
 				pointTotal += 4;
-			} else if (letter == 'K') {
+			} else if (uLetter == 'K') {
 				pointTotal += 5;
-			} else if (letter == 'J' || letter == 'X') {
+			} else if (uLetter == 'J' || uLetter == 'X') {
 				pointTotal += 8;
-			} else if (letter == 'Q' || letter == 'Z') {
+			} else if (uLetter == 'Q' || uLetter == 'Z') {
 				pointTotal += 10;
 			}
 		}
@@ -185,7 +186,7 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
