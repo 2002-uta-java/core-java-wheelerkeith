@@ -214,13 +214,13 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		Map<String, Integer> countingWords = new HashMap<String, Integer>();
-		for (String word: string.split(" |\\,")) {
-			int count = 0;
+		string = string.replace(",", " ");
+		string = string.replace("\n", "");
+		for (String word: string.split(" |\\,|\\[\\n]")) {
 			if (countingWords.containsKey(word)) {
-				count = countingWords.get(word);
-				countingWords.replace(word, count++);
-				count = 0;
-			} else {
+				int count = countingWords.get(word);
+				countingWords.put(word, ++count);
+			}else {
 				countingWords.put(word, 1);
 			}
 		}
@@ -266,8 +266,17 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+			if (t == null) {
+	            for (int i = 0; i < sortedList.size(); i++)
+	                if (sortedList.get(i)==null)
+	                    return i;
+	        } else {
+	            for (int i = 0; i < sortedList.size(); i++)
+	                if (t.equals(sortedList.get(i)))
+	                    return i;
+	        }
+			
+			throw new NullPointerException();
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -303,8 +312,31 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String translated = "";
+		int wordCount = 0;
+		for (String word: string.split(" ", string.length())) {
+			if (word.startsWith("a") || word.startsWith("e") || word.startsWith("i")
+					|| word.startsWith("o") || word.startsWith("u")) {
+				translated += word + "ay ";
+				wordCount++;
+			} else if (word.startsWith("th") || word.startsWith("qu")) {
+				String beginning = word.substring(0, 2);
+				word = word.replace(beginning, "");
+				translated += word + beginning + "ay";
+				wordCount++;
+			} else if (word.startsWith("sch")) {
+				String beginning = word.substring(0, 3);
+				word = word.replace(beginning, "");
+				translated += word + beginning + "ay";
+				wordCount++;
+			} else {
+				String beginning = word.substring(0, 1);
+				word = word.replace(beginning, "");
+				translated += word + beginning + "ay";
+				wordCount++;
+			}
+		}
+		return translated;
 	}
 
 	/**
@@ -323,7 +355,8 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
+		boolean isArmstrong = false;
+		if ()
 		return false;
 	}
 
