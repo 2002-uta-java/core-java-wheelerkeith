@@ -1,6 +1,8 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -266,17 +268,10 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			if (t == null) {
-	            for (int i = 0; i < sortedList.size(); i++)
-	                if (sortedList.get(i)==null)
-	                    return i;
-	        } else {
-	            for (int i = 0; i < sortedList.size(); i++)
-	                if (t.equals(sortedList.get(i)))
-	                    return i;
-	        }
-			
-			throw new NullPointerException();
+	        for (int i = 0; i < sortedList.size(); i++)
+	        	if (t.equals(sortedList.get(i)))
+	        		return i;
+	        throw new NullPointerException();
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -355,9 +350,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		boolean isArmstrong = false;
-		if ()
-		return false;
+		String number = Integer.toString(input);
+		int original = input;
+		int total = 0;
+		while (original != 0) {
+			int remainder = original % 10;
+			total += Math.pow(remainder, number.length());
+			original /= 10;
+		}
+		
+		if (total == input) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -371,8 +377,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> primes = new ArrayList<Long>();
+		for (Long divideBy = 2l; divideBy <= l; divideBy++) {
+			while (l % divideBy == 0) {
+				primes.add(divideBy);
+				l /= divideBy;
+			}
+		}
+		return primes;
 	}
 
 	/**
@@ -410,9 +422,29 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
-		}
+            String translated = "";
+            for (int index = 0; index < string.length(); index++) {
+                char ch = string.charAt(index);
+                
+                // first for lower case, second for uppercase
+                if (ch >= 'a' && ch <= 'z') {
+                    ch = (char)(ch + key);
+                    // if at z then start at beginning of alphabet
+                    if (ch > 'z') {
+                        ch = (char)(ch + 'a' - 'z' - 1);
+                    }
+                } else if (ch >= 'A' && ch <='Z') {
+                    ch = (char)(ch + key);
+                    
+                    // also if at Z go to beginning
+                    if (ch > 'Z') {
+                        ch = (char)(ch + 'A' - 'Z' - 1);
+                    }
+                }               
+                translated += ch;
+            }
+            return translated;
+        }
 
 	}
 
@@ -429,8 +461,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		if (i == 0) {
+			throw new IllegalArgumentException();
+		}
+		int count = 0;
+		int prime = 1;
+		int increment;
+		while (count < i) {
+			prime = prime + 1;
+			for (increment = 2; increment <= prime; increment++) {
+				if (prime % increment == 0) {
+					break;
+				}
+			}
+			if (prime == increment) {
+				count += 1;
+			}
+		}
+		return prime;
 	}
 
 	/**
