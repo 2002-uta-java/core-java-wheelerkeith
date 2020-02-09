@@ -515,8 +515,16 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String encoded = "";
+			string = removeUnwantedChars(string.toLowerCase());
+			for (char letter: string.toCharArray()) {
+				if (Character.isLetter(letter)) {
+					encoded += (char)('a' + ('z' - letter));
+				} else {
+					encoded += letter;
+				}
+			}
+			return getSubStrings(encoded).trim();
 		}
 
 		/**
@@ -526,9 +534,47 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String decoded = "";
+			string = removeUnwantedChars(string.toLowerCase());
+			for (char letter: string.toCharArray()) {
+				if (Character.isLetter(letter)) {
+					decoded += (char)('a' + ('z' - letter));
+				} else {
+					decoded += letter;
+				}
+			}
+			return getSubStrings(decoded).trim();
 		}
+		
+		private static String getSubStrings(String input)
+	    {
+	        String out = "";
+	        for(int i = 0; i < input.length(); i += 5)
+	        {
+	            if(i + 5 <= input.length())
+	            {
+	                out += (input.substring(i, i + 5) + " ");
+	            }
+	            else
+	            {
+	                out += (input.substring(i) + " ");
+	            }
+	        }
+	        return out;
+	    }
+
+	    private static String removeUnwantedChars(String input)
+	    {
+	        String out = "";
+	        for(char c : input.toCharArray())
+	        {
+	            if(Character.isLetterOrDigit(c))
+	            {
+	                out += c;
+	            }
+	        }
+	        return out;
+	    }
 	}
 
 	/**
@@ -554,7 +600,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
+		int[] isbn = string 
 		return false;
 	}
 
