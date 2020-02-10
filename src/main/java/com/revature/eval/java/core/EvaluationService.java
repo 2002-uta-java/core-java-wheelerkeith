@@ -1,6 +1,10 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -216,9 +220,8 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		Map<String, Integer> countingWords = new HashMap<String, Integer>();
-		string = string.replace(",", " ");
-		string = string.replace("\n", "");
-		for (String word: string.split(" |\\,|\\[\\n]")) {
+		string = string.replace(",", " ").replace("\n", "");
+		for (String word: string.split(" ")) {
 			if (countingWords.containsKey(word)) {
 				int count = countingWords.get(word);
 				countingWords.put(word, ++count);
@@ -613,7 +616,7 @@ public class EvaluationService {
 		char num = numbers.charAt(9);
 		if (num == 'X') {
 			total += 10;
-		} else if (num < '0' || num > '9') {
+		} else if (num > '0' || num < '9') {
 			total += num - '0';
 		} else {
 			return false;
@@ -665,8 +668,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		
-		return null;
+		final long GIGASECOND = 1000000000;
+		LocalDateTime beginning = null;
+		if (given instanceof LocalDateTime) {
+			return given.plus(GIGASECOND, ChronoUnit.SECONDS);
+		} else {
+			LocalDate give = (LocalDate) given;
+			beginning = give.atStartOfDay();
+			return beginning.plus(GIGASECOND, ChronoUnit.SECONDS);
+		}
 	}
 
 	/**
@@ -683,8 +693,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int total = 0;
+		int[] foundMultiples = new int[11000];
+		for (int count = 0; count < i; count++) {
+			for (int multiple: set) {
+				if (count % multiple == 0) {
+					if (foundMultiples[count] != count) {
+						foundMultiples[count] = count;
+					}
+				}
+			}
+		}
+		
+		for (int count : foundMultiples) {
+			total += count;
+		}
+		return total;
 	}
 
 	/**
@@ -724,8 +748,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		string = string.replaceAll(" ", "");
+		int total = 0;
+		if (!string.matches("[0-9]+"))
+			return false;
+		for (int i = 0; i < string.length(); i++) {
+			int num = Integer.parseInt(string.substring(i, i + 1));
+			System.out.println(num);
+			if ((i + 1) % 2 == 0) {
+				num *= 2;
+				if (num > 9) 
+					num -= 9;
+				total += num;
+			} else {
+				total += num;
+			}
+		}
+		if (total % 10 == 0)
+			return true;
+		else 
+			return false;
 	}
 
 	/**
@@ -756,8 +798,19 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		String[] words = string.replace("?", "").split(" ");
+		switch (words[3]) {
+			case "plus":
+				return Integer.parseInt(words[2]) + Integer.parseInt(words[words.length - 1]);
+			case "minus":
+				return Integer.parseInt(words[2]) - Integer.parseInt(words[words.length - 1]);
+			case "multiplied":
+				return Integer.parseInt(words[2]) * Integer.parseInt(words[words.length - 1]);
+			case "divided":
+				return Integer.parseInt(words[2]) / Integer.parseInt(words[words.length - 1]);
+			default:
+				throw new IllegalArgumentException();
+		}
 	}
 
 }
