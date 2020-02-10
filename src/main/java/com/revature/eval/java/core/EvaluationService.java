@@ -315,16 +315,19 @@ public class EvaluationService {
 			} else if (word.startsWith("th") || word.startsWith("qu")) {
 				String beginning = word.substring(0, 2);
 				word = word.replace(beginning, "");
-				translated += word + beginning + "ay";
+				translated += word + beginning + "ay ";
 			} else if (word.startsWith("sch")) {
 				String beginning = word.substring(0, 3);
 				word = word.replace(beginning, "");
-				translated += word + beginning + "ay";
+				translated += word + beginning + "ay ";
 			} else {
 				String beginning = word.substring(0, 1);
 				word = word.replace(beginning, "");
-				translated += word + beginning + "ay";
+				translated += word + beginning + "ay ";
 			}
+		}
+		if (translated.endsWith(" ")) {
+			return translated.substring(0, translated.length() - 1);
 		}
 		return translated;
 	}
@@ -616,8 +619,6 @@ public class EvaluationService {
 			return false;
 		}
 		
-		System.out.println(total);
-		
 		if (total % 11 == 0) {
 			return true;
 		} else {
@@ -647,8 +648,8 @@ public class EvaluationService {
 				}
 			}
 		}
-		for (char c : alphabet.toCharArray()) {
-			if (c != '~') {
+		for (char check : alphabet.toCharArray()) {
+			if (check != '~') {
 				return false;
 			}
 		}
@@ -664,7 +665,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
