@@ -308,27 +308,22 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		String translated = "";
-		int wordCount = 0;
 		for (String word: string.split(" ", string.length())) {
 			if (word.startsWith("a") || word.startsWith("e") || word.startsWith("i")
 					|| word.startsWith("o") || word.startsWith("u")) {
 				translated += word + "ay ";
-				wordCount++;
 			} else if (word.startsWith("th") || word.startsWith("qu")) {
 				String beginning = word.substring(0, 2);
 				word = word.replace(beginning, "");
 				translated += word + beginning + "ay";
-				wordCount++;
 			} else if (word.startsWith("sch")) {
 				String beginning = word.substring(0, 3);
 				word = word.replace(beginning, "");
 				translated += word + beginning + "ay";
-				wordCount++;
 			} else {
 				String beginning = word.substring(0, 1);
 				word = word.replace(beginning, "");
 				translated += word + beginning + "ay";
-				wordCount++;
 			}
 		}
 		return translated;
@@ -524,7 +519,7 @@ public class EvaluationService {
 					encoded += letter;
 				}
 			}
-			return getSubStrings(encoded).trim();
+			return getEncodedSubStrings(encoded).trim();
 		}
 
 		/**
@@ -543,10 +538,10 @@ public class EvaluationService {
 					decoded += letter;
 				}
 			}
-			return getSubStrings(decoded).trim();
+			return decoded;
 		}
 		
-		private static String getSubStrings(String input)
+		private static String getEncodedSubStrings(String input)
 	    {
 	        String out = "";
 	        for(int i = 0; i < input.length(); i += 5)
@@ -600,8 +595,34 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		int[] isbn = string 
-		return false;
+		String numbers = string.replaceAll(" |\\-", "");
+		int total = 0;
+
+		for (int index = 0; index < 9; index++) {
+			String num = numbers.substring(index, index + 1);
+			if (num.matches("[0-9]")) {
+				total += Integer.parseInt(num) * (10 - index);
+			} else {
+				return false;
+			}
+		}
+		
+		char num = numbers.charAt(9);
+		if (num == 'X') {
+			total += 10;
+		} else if (num < '0' || num > '9') {
+			total += num - '0';
+		} else {
+			return false;
+		}
+		
+		System.out.println(total);
+		
+		if (total % 11 == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -618,8 +639,20 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		String alph = "abcdefghijklmnopqrstuvwxyz";
+		for (char c1 : string.toCharArray()) {
+			for (char c2 : alph.toCharArray()) {
+				if (c1 == c2) {
+					alph = alph.replace(c2, '~');
+				}
+			}
+		}
+		for (char c : alph.toCharArray()) {
+			if (c != '~') {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
