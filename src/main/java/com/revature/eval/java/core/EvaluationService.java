@@ -639,15 +639,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		String alph = "abcdefghijklmnopqrstuvwxyz";
-		for (char c1 : string.toCharArray()) {
-			for (char c2 : alph.toCharArray()) {
-				if (c1 == c2) {
-					alph = alph.replace(c2, '~');
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		for (char sentanceChar : string.toCharArray()) {
+			for (char alphabetChar : alphabet.toCharArray()) {
+				if (sentanceChar == alphabetChar) {
+					alphabet = alphabet.replace(alphabetChar, '~');
 				}
 			}
 		}
-		for (char c : alph.toCharArray()) {
+		for (char c : alphabet.toCharArray()) {
 			if (c != '~') {
 				return false;
 			}
