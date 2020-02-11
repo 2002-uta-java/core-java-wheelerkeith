@@ -4,10 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -754,7 +751,6 @@ public class EvaluationService {
 			return false;
 		for (int i = 0; i < string.length(); i++) {
 			int num = Integer.parseInt(string.substring(i, i + 1));
-			System.out.println(num);
 			if ((i + 1) % 2 == 0) {
 				num *= 2;
 				if (num > 9) 
